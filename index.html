@@ -1,0 +1,2584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIE엔지니어링 | AI 기반 기계설비설계·TAB·커미셔닝·성능점검 전문 기업</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-dark: #0B192C;
+      --primary-navy: #1E3E62;
+      --accent-cyan: #00ADB5;
+      --accent-blue: #0284C7;
+      --accent-hover: #0369A1;
+      --warning-amber: #F59E0B;
+      --danger-red: #EF4444;
+      --success-green: #10B981;
+      
+      --bg-page: #F8FAFC;
+      --bg-white: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #F1F5F9;
+      
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --text-light: #94A3B8;
+      --border-color: #E2E8F0;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 15px rgba(15,23,42,0.08);
+      --shadow-lg: 0 12px 30px rgba(15,23,42,0.12);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --transition: all 0.25s ease-in-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* Top Utility Bar */
+    .top-bar {
+      background: var(--primary-dark);
+      color: #94A3B8;
+      font-size: 0.8rem;
+      padding: 8px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .top-bar-left span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #CBD5E1;
+    }
+    .top-bar-left strong {
+      color: var(--accent-cyan);
+    }
+    .top-bar-right {
+      display: flex;
+      gap: 18px;
+    }
+    .top-bar-right a:hover { color: #FFF; }
+
+    /* Navigation Bar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    .nav-container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 100%);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      border-radius: var(--radius-sm);
+      letter-spacing: -0.05em;
+      border: 1px solid rgba(0, 173, 181, 0.3);
+      flex-shrink: 0;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      white-space: nowrap;
+    }
+    .brand-text h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--primary-dark);
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .brand-text span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    /* Dropdown Navigation */
+    .nav-dropdown-wrap {
+      position: relative;
+    }
+    .nav-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      min-width: 175px;
+      padding: 6px 0;
+      display: none;
+      flex-direction: column;
+      z-index: 1050;
+      animation: dropFade 0.2s ease;
+    }
+    .nav-dropdown-wrap:hover .nav-dropdown {
+      display: flex;
+    }
+    .nav-dropdown a {
+      padding: 10px 18px !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      color: #334155 !important;
+      display: flex !important;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .nav-dropdown a:hover {
+      background: #EFF6FF;
+      color: var(--accent-blue) !important;
+    }
+    .nav-dropdown a::after {
+      display: none !important;
+    }
+    @keyframes dropFade {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Company Pop-up Modal */
+    .company-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(11, 25, 44, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .company-modal-overlay.active {
+      display: flex;
+    }
+    .company-modal-box {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 980px;
+      max-height: 90vh;
+      border-radius: var(--radius-md);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalZoom 0.25s ease-out;
+    }
+    @keyframes modalZoom {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .company-modal-header {
+      background: var(--primary-dark);
+      color: #FFF;
+      padding: 18px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .company-modal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .company-modal-close {
+      color: #94A3B8;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .company-modal-close:hover {
+      background: rgba(255,255,255,0.1);
+      color: #FFF;
+    }
+    .company-tabs-nav {
+      display: flex;
+      background: #F1F5F9;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 20px;
+      gap: 6px;
+    }
+    .company-tab-btn {
+      padding: 14px 22px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #64748B;
+      border: none;
+      background: none;
+      border-bottom: 3px solid transparent;
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .company-tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+      background: #FFFFFF;
+    }
+    .company-modal-body {
+      padding: 32px 36px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .company-tab-panel {
+      display: none;
+    }
+    .company-tab-panel.active {
+      display: block;
+      animation: tabFadeIn 0.25s ease;
+    }
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Greetings Tab Styling */
+    .greeting-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .greeting-photo-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .greeting-photo-card img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .greeting-photo-caption {
+      padding: 14px;
+      background: #FFF;
+      border-top: 1px solid var(--border-color);
+    }
+    .greeting-photo-caption strong {
+      font-size: 1rem;
+      color: var(--primary-dark);
+      display: block;
+    }
+    .greeting-photo-caption span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .greeting-content h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .greeting-content .greeting-sub {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .greeting-text-p {
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .greeting-sign-block {
+      margin-top: 28px;
+      text-align: right;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    .greeting-sign-block span {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: 0.1em;
+    }
+
+    /* Overview Tab Styling */
+    .overview-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .overview-building-img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      display: block;
+    }
+    .overview-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .overview-table th, .overview-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .overview-table th {
+      background: #F8FAFC;
+      color: #475569;
+      font-weight: 700;
+      width: 28%;
+      white-space: nowrap;
+    }
+    .overview-table td {
+      color: #0F172A;
+      font-weight: 500;
+    }
+
+    /* Licenses Tab Styling */
+    .licenses-banner {
+      width: 100%;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: block;
+    }
+    .licenses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .license-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: var(--transition);
+    }
+    .license-card:hover {
+      border-color: var(--accent-blue);
+      background: #FFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .license-icon-wrap {
+      width: 44px;
+      height: 44px;
+      background: #EFF6FF;
+      color: var(--accent-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .license-card-text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--primary-dark);
+      margin-bottom: 3px;
+    }
+    .license-card-text span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 800px) {
+      .greeting-layout, .overview-layout { grid-template-columns: 1fr; }
+      .greeting-photo-card img, .overview-building-img { height: 260px; }
+      .licenses-grid { grid-template-columns: 1fr; }
+    }
+    .nav-links {
+      display: flex !important;
+      flex-direction: row !important;
+      list-style: none !important;
+      gap: clamp(14px, 1.8vw, 28px);
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+    }
+    .nav-links li {
+      list-style: none !important;
+      white-space: nowrap;
+      position: relative;
+    }
+    .nav-links li a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #334155;
+      padding: 6px 0;
+      position: relative;
+      transition: var(--transition);
+      white-space: nowrap;
+      word-break: keep-all;
+      display: inline-block;
+    }
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      color: var(--accent-blue);
+    }
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--accent-blue);
+      transition: var(--transition);
+    }
+    .nav-links li a:hover::after,
+    .nav-links li a.active::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .btn-simulator {
+      background: #EFF6FF;
+      color: var(--accent-blue);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 9px 15px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #BFDBFE;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+    .btn-simulator:hover {
+      background: #DBEAFE;
+    }
+    .btn-contact {
+      background: var(--primary-dark);
+      color: #FFF;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+    .btn-contact:hover {
+      background: var(--accent-blue);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%);
+      color: #FFF;
+      padding: 90px 24px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-pattern {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 173, 181, 0.12) 0%, rgba(11, 25, 44, 0) 70%);
+      pointer-events: none;
+    }
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content {
+      max-width: 980px;
+      margin: 0 auto 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 173, 181, 0.15);
+      border: 1px solid rgba(0, 173, 181, 0.35);
+      color: var(--accent-cyan);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 30px;
+      margin-bottom: 22px;
+    }
+    .hero-title {
+      font-size: clamp(2.3rem, 4.2vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+    .hero-title span {
+      background: linear-gradient(90deg, #38BDF8, #00ADB5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.12rem;
+      color: #CBD5E1;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      font-weight: 300;
+      max-width: 840px;
+      text-align: center;
+    }
+    .hero-rule-box {
+      background: rgba(255, 255, 255, 0.07);
+      border-left: 4px solid var(--accent-cyan);
+      border-right: 4px solid var(--accent-cyan);
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      color: #E2E8F0;
+      margin-bottom: 36px;
+      backdrop-filter: blur(8px);
+      max-width: 760px;
+      text-align: center;
+    }
+    .hero-rule-box strong { color: #38BDF8; }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-hero-primary {
+      background: var(--accent-blue);
+      color: #FFF;
+      font-weight: 700;
+      padding: 15px 30px;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+    }
+    .btn-hero-primary:hover {
+      background: #0275B1;
+      transform: translateY(-2px);
+    }
+    .btn-hero-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFF;
+      font-weight: 600;
+      padding: 15px 26px;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero Tech Visual Card */
+    .hero-visual-card {
+      width: 100%;
+      max-width: 960px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
+      text-align: left;
+    }
+    .visual-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .visual-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #38BDF8;
+    }
+    .status-pulse {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success-green);
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .metric-tile {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 14px 10px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .metric-num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #F8FAFC;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .metric-label {
+      font-size: 0.72rem;
+      color: #94A3B8;
+      margin-top: 4px;
+    }
+    .anomaly-preview {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+    }
+    .anomaly-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #FCA5A5;
+      margin-bottom: 6px;
+    }
+    .anomaly-desc {
+      font-size: 0.78rem;
+      color: #E2E8F0;
+      line-height: 1.5;
+    }
+    .verify-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      color: #A7F3D0;
+    }
+
+    /* Section Utility */
+    .section-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 90px 24px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-subtitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Problem vs Solution Comparison */
+    .comparison-section {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .comp-card {
+      padding: 36px 32px;
+      border-radius: var(--radius-md);
+      position: relative;
+    }
+    .comp-card.problem {
+      background: #FFF5F5;
+      border: 1px solid #FECACA;
+    }
+    .comp-card.solution {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+    }
+    .comp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .comp-card.problem .comp-badge { background: #FEE2E2; color: #DC2626; }
+    .comp-card.solution .comp-badge { background: #DCFCE7; color: #16A34A; }
+
+    .comp-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .comp-card.problem .comp-title { color: #991B1B; }
+    .comp-card.solution .comp-title { color: #166534; }
+
+    .comp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .comp-list li {
+      font-size: 0.92rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .comp-card.problem .comp-list li i { color: #EF4444; margin-top: 3px; }
+    .comp-card.solution .comp-list li i { color: #10B981; margin-top: 3px; }
+
+    /* Core 4 Business Domains */
+    .domains-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .domain-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 30px 24px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .domain-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: #CBD5E1;
+    }
+    .domain-icon-wrap {
+      width: 52px;
+      height: 52px;
+      background: #EFF6FF;
+      color: var(--accent-blue);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    .domain-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary-dark);
+    }
+    .domain-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .domain-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+    .domain-tag {
+      font-size: 0.72rem;
+      background: #F1F5F9;
+      color: #475569;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* 3-Step Human-in-the-Loop Architecture */
+    .workflow-section {
+      background: #0B192C;
+      color: #FFF;
+      position: relative;
+    }
+    .workflow-section .section-title { color: #FFF; }
+    .workflow-section .section-desc { color: #94A3B8; }
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      position: relative;
+    }
+    .workflow-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 36px 28px;
+      position: relative;
+    }
+    .step-badge {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+      display: block;
+    }
+    .step-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #FFF;
+    }
+    .step-role {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .step-desc {
+      font-size: 0.9rem;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+
+    /* Security & Control Sub-bar */
+    .security-bar {
+      margin-top: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .security-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sec-icon {
+      font-size: 1.5rem;
+      color: var(--accent-cyan);
+    }
+    .sec-text strong {
+      display: block;
+      font-size: 0.92rem;
+      color: #FFF;
+    }
+    .sec-text span {
+      font-size: 0.78rem;
+      color: #94A3B8;
+    }
+
+    /* Quantitative Performance Grid */
+    .stats-section {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .stat-box {
+      padding: 32px 20px;
+      border-radius: var(--radius-md);
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+    }
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .stat-number span { color: var(--accent-blue); }
+    .stat-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1E293B;
+      margin-bottom: 6px;
+    }
+    .stat-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* INTERACTIVE SIMULATOR SECTION (Key Highlight) */
+    .simulator-section {
+      background: #F1F5F9;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .sim-container {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .sim-header {
+      background: var(--primary-dark);
+      color: #FFF;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sim-header-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sim-body {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      padding: 32px;
+      gap: 36px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #CBD5E1;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+      background: #F8FAFC;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--accent-blue);
+      background: #FFF;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+    }
+    .btn-sim-run {
+      width: 100%;
+      background: var(--primary-navy);
+      color: #FFF;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      margin-top: 10px;
+    }
+    .btn-sim-run:hover {
+      background: var(--primary-dark);
+    }
+    .sample-btn-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .btn-sample {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid #CBD5E1;
+      background: #FFF;
+      color: #475569;
+      transition: var(--transition);
+    }
+    .btn-sample:hover {
+      background: #E2E8F0;
+    }
+
+    /* Simulator Live Results Output */
+    .sim-output-box {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sim-out-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .sim-out-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .sim-chart-wrap {
+      background: #FFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .chart-bar-row {
+      margin-bottom: 14px;
+    }
+    .chart-bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .chart-bar-track {
+      height: 10px;
+      background: #E2E8F0;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+    .chart-bar-fill {
+      height: 100%;
+      background: var(--accent-blue);
+      border-radius: 5px;
+      transition: width 0.6s ease;
+    }
+    .chart-bar-fill.danger { background: var(--danger-red); }
+    .chart-bar-fill.normal { background: var(--success-green); }
+
+    .ai-opinion-box {
+      background: #EFF6FF;
+      border-left: 4px solid var(--accent-blue);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.88rem;
+      color: #1E3A8A;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .btn-generate-report {
+      margin-top: auto;
+      background: var(--success-green);
+      color: #FFF;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 13px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    .btn-generate-report:hover {
+      background: #059669;
+    }
+
+    /* 6-Month Roadmap & Pilot Plan */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .roadmap-card {
+      background: #FFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .roadmap-phase {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .roadmap-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+    }
+    .roadmap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .roadmap-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .roadmap-list li i {
+      color: var(--accent-blue);
+      margin-top: 4px;
+    }
+
+    /* Contact & Consultation Form */
+    .contact-section {
+      background: #0B192C;
+      color: #FFF;
+    }
+    .contact-section .section-title { color: #FFF; }
+    .contact-section .section-desc { color: #94A3B8; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .contact-info-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+    .contact-info-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 173, 181, 0.15);
+      color: var(--accent-cyan);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .contact-info-text strong {
+      display: block;
+      font-size: 1rem;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+    .contact-info-text p {
+      font-size: 0.9rem;
+      color: #CBD5E1;
+    }
+
+    .contact-form-box {
+      background: #FFF;
+      color: var(--text-main);
+      padding: 36px 32px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+    }
+    .contact-form-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary-dark);
+    }
+
+    /* Footer */
+    footer {
+      background: #070F1E;
+      color: #94A3B8;
+      padding: 60px 24px 30px;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand h2 {
+      color: #FFF;
+      font-size: 1.4rem;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+    .footer-brand p {
+      line-height: 1.6;
+      max-width: 360px;
+    }
+    .footer-col h4 {
+      color: #FFF;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links li a:hover { color: #FFF; }
+    .footer-bottom {
+      max-width: 1320px;
+      margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.78rem;
+    }
+
+    /* Modal: Generated Report Preview */
+    .report-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .report-modal.active { display: flex; }
+    .report-paper {
+      background: #FFF;
+      width: 100%;
+      max-width: 840px;
+      max-height: 90vh;
+      border-radius: var(--radius-md);
+      overflow-y: auto;
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .report-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.3rem;
+      color: #64748B;
+      cursor: pointer;
+    }
+    .report-header-ui {
+      border-bottom: 2px solid var(--primary-dark);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+    .report-table th, .report-table td {
+      border: 1px solid #CBD5E1;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .report-table th { background: #F1F5F9; font-weight: 700; }
+    .report-sign-box {
+      border: 2px dashed #94A3B8;
+      background: #F8FAFC;
+      padding: 18px;
+      text-align: right;
+      border-radius: 6px;
+      font-size: 0.88rem;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary-dark);
+      color: #FFF;
+      padding: 14px 24px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 2500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .nav-links { gap: 12px; }
+      .nav-links li a { font-size: 0.84rem; }
+      .btn-simulator, .btn-contact { padding: 8px 12px; font-size: 0.8rem; }
+    }
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .domains-grid { grid-template-columns: repeat(2, 1fr); }
+      .workflow-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .sim-body { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .domains-grid { grid-template-columns: 1fr; }
+      .roadmap-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Utility Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span><i class="fa-solid fa-microchip"></i> <strong>GIE Engineering AI Suite</strong> | 측정 데이터와 문서 업무는 AI로 줄이고, 엔지니어의 현장 판단을 강화합니다.</span>
+    </div>
+    <div class="top-bar-right">
+      <a href="#simulator"><i class="fa-solid fa-play"></i> 계측 시뮬레이터</a>
+      <a href="#roadmap">추진 로드맵</a>
+      <a href="#contact">기술 상담 신청</a>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="logo-badge">GIE</div>
+        <div class="brand-text">
+          <h1>GIE ENGINEERING</h1>
+          <span>AI-DRIVEN MECHANICAL ENGINEERING</span>
+        </div>
+      </div>
+
+      <ul class="nav-links">
+        <li class="nav-dropdown-wrap">
+          <a href="javascript:void(0)" class="active" onclick="openCompanyModal('greeting')">
+            회사소개 <i class="fa-solid fa-chevron-down" style="font-size: 0.72rem; margin-left: 3px;"></i>
+          </a>
+          <div class="nav-dropdown">
+            <a href="javascript:void(0)" onclick="openCompanyModal('greeting')"><i class="fa-solid fa-user-tie"></i> 인사말</a>
+            <a href="javascript:void(0)" onclick="openCompanyModal('overview')"><i class="fa-solid fa-building"></i> 회사개요</a>
+            <a href="javascript:void(0)" onclick="openCompanyModal('license')"><i class="fa-solid fa-certificate"></i> 면허 및 자격</a>
+          </div>
+        </li>
+        <li><a href="#domains">사업영역 (설계·TAB·점검)</a></li>
+        <li><a href="#workflow">AI 솔루션 프로세스</a></li>
+        <li><a href="#simulator">AI 계측 시뮬레이터</a></li>
+        <li><a href="#stats">도입 성과</a></li>
+        <li><a href="#roadmap">로드맵</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#simulator" class="btn-simulator"><i class="fa-solid fa-chart-line"></i> AI 진단 체험</a>
+        <a href="#contact" class="btn-contact"><i class="fa-solid fa-paper-plane"></i> 프로젝트 문의</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="about">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i class="fa-solid fa-brain"></i> GIE엔지니어링 AI 업무개선 공식 플랫폼
+        </div>
+        <h2 class="hero-title">
+          측정 데이터와 문서 업무는<br>
+          <span>AI로 60% 이상 줄이고,</span><br>
+          엔지니어의 현장 판단을 강화합니다.
+        </h2>
+        <p class="hero-desc">
+          기계설비설계 · TAB · Commissioning · 기계설비 성능점검 전 과정을 아우르는 차세대 엔지니어링 패러다임.
+          수천 개의 계측값과 복잡한 법정 서식은 AI가 분석·대조하고, 고숙련 기술진은 정밀 계측과 공학적 최종 판단에 집중합니다.
+        </p>
+
+        <div class="hero-rule-box">
+          <strong><i class="fa-solid fa-shield-halved"></i> GIE 업무 원칙 (Human-in-the-Loop):</strong><br>
+          AI는 분석과 초안 작성을 보조하며, 전문 기술인력이 계측·조정 및 법적 최종 책임을 수행합니다.
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#simulator" class="btn-hero-primary"><i class="fa-solid fa-bolt"></i> TAB 계측 이상감지 시뮬레이터 체험</a>
+          <a href="#domains" class="btn-hero-secondary"><i class="fa-solid fa-layer-group"></i> 4대 사업 분야 확인</a>
+        </div>
+      </div>
+
+      <!-- Hero Visual Live Monitor Mockup -->
+      <div class="hero-visual-card">
+        <div class="visual-card-header">
+          <div class="visual-card-title">
+            <span class="status-pulse"></span>
+            <span>GIE AI 실시간 설비 모니터링 & 분석 엔진</span>
+          </div>
+          <span style="font-size: 0.75rem; color: #94A3B8;">VER 2.6 CONNECTED</span>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-tile">
+            <div class="metric-num">16h ➜ 6h</div>
+            <div class="metric-label">건당 보고서 작성 시간</div>
+          </div>
+          <div class="metric-tile">
+            <div class="metric-num" style="color: #38BDF8;">0.0%</div>
+            <div class="metric-label">수기 입력 오류율 목표</div>
+          </div>
+          <div class="metric-tile">
+            <div class="metric-num" style="color: var(--accent-cyan);">3X</div>
+            <div class="metric-label">기술자료 대응 속도</div>
+          </div>
+        </div>
+
+        <!-- Anomaly Notification Card from Slide 4 -->
+        <div class="anomaly-preview">
+          <div class="anomaly-header">
+            <span><i class="fa-solid fa-triangle-exclamation"></i> 허용 오차 초과 구간 자동 식별</span>
+            <span style="background: #EF4444; color: #FFF; padding: 2px 6px; border-radius: 3px; font-size: 0.7rem;">허용 오차 초과</span>
+          </div>
+          <div class="anomaly-desc">
+            • <strong>이상 구간:</strong> 14:10 ~ 15:50 (실측값 92.3℃ / 허용범위 60.0~80.0℃)<br>
+            • <strong>AI 분석 의견:</strong> 냉각 시스템 성능 저하 가능성 및 센서 보정값 편차 의심<br>
+            • <strong>조치 권고:</strong> 냉각 펌프 점검 및 필터 스트레이너 교체 검토
+          </div>
+        </div>
+
+        <div class="verify-badge">
+          <span><i class="fa-solid fa-user-check"></i> 책임 엔지니어 최종 검증 및 공학적 승인 완료</span>
+          <strong style="color: #FFF;">보안망 암호화 처리</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem vs Solution Section (Slide 2, 3) -->
+  <section class="comparison-section">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-subtitle">Challenge & Solution</span>
+        <h2 class="section-title">기존 설비 엔지니어링의 병목, AI로 해결합니다</h2>
+        <p class="section-desc">수천 개의 계측값이 문서 작업으로 되돌아오고 개인 PC에 흩어지던 현장의 한계를 표준화와 자동화로 혁신합니다.</p>
+      </div>
+
+      <div class="comparison-grid">
+        <!-- Problem Card -->
+        <div class="comp-card problem">
+          <span class="comp-badge"><i class="fa-solid fa-xmark"></i> AS-IS : 기존 현장 문제</span>
+          <h3 class="comp-title">측정 후 문서화가 전체 공수의 40% 이상 차지</h3>
+          <ul class="comp-list">
+            <li>
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <div><strong>수기 입력과 반복 편집의 오류 위험:</strong> 풍량·유량·압력·온도 수천 개 데이터를 엑셀에 일일이 재입력하며 오타 및 전표 오류 발생.</div>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <div><strong>현장 정밀 진단 시간 손실:</strong> 고숙련 엔지니어가 보고서 작성 및 서식 정리에 16시간 이상을 소모하여 본질적인 기술 진단 시간 부족.</div>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <div><strong>기술 노하우 분산 및 사일로화:</strong> 과거 설계도서, 특기시방서, 트러블슈팅 사례가 담당자 개인 PC에 흩어져 신속한 지식 공유 불가.</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Solution Card -->
+        <div class="comp-card solution">
+          <span class="comp-badge"><i class="fa-solid fa-check"></i> TO-BE : GIE AI 업무개선 솔루션</span>
+          <h3 class="comp-title">반복 문서는 줄이고, 공학적 판단은 남긴다</h3>
+          <ul class="comp-list">
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <div><strong>장비 데이터 자동 파싱 & 이상구간 탐지:</strong> 계측 장비 로그를 설계 기준과 자동 대조하여 허용 오차 초과 구간을 1초 만에 식별.</div>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <div><strong>보고서 초안 60% 단축 자동 생성:</strong> 표준 점검표와 원인/조치 의견이 정리된 결과 보고서 초안을 AI가 자동 완성해 작성 시간 6시간 이내로 단축.</div>
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <div><strong>중앙 집중형 AI 엔지니어링 지식베이스:</strong> 법정 서류, 과거 점검 이력, 설계도서를 비식별화 통합하여 대응 속도를 3배 향상.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 Core Business Domains (Slide 6) -->
+  <section class="section-wrap" id="domains">
+    <div class="section-header">
+      <span class="section-subtitle">Core Capabilities</span>
+      <h2 class="section-title">GIE엔지니어링 4대 핵심 사업 영역</h2>
+      <p class="section-desc">기계설비의 설계부터 시공 검증, 법정 성능점검, 기술 영업까지 전 주기를 통합 지원합니다.</p>
+    </div>
+
+    <div class="domains-grid">
+      <!-- Domain 1 -->
+      <div class="domain-card">
+        <div class="domain-icon-wrap"><i class="fa-solid fa-compass-drafting"></i></div>
+        <h3 class="domain-title">기계설비설계 1차 검수</h3>
+        <p class="domain-desc">설계도서와 장비 일람표의 수치 불일치를 자동 탐지하고, 과거 유사 시방서와 트러블슈팅 사례를 즉시 검색하여 설계 정밀도를 극대화합니다.</p>
+        <div class="domain-tags">
+          <span class="domain-tag">장비일람표 검증</span>
+          <span class="domain-tag">특기시방서 매칭</span>
+          <span class="domain-tag">오류 사전 차단</span>
+        </div>
+      </div>
+
+      <!-- Domain 2 -->
+      <div class="domain-card">
+        <div class="domain-icon-wrap"><i class="fa-solid fa-chart-line"></i></div>
+        <h3 class="domain-title">TAB · Commissioning</h3>
+        <p class="domain-desc">공조 풍량, 수배관 유량, 차압, 온습도 계측값을 설계 기준과 자동 대조하여 오차를 계산하고 불균형 구간을 실시간 탐지합니다.</p>
+        <div class="domain-tags">
+          <span class="domain-tag">풍량·유량 밸런싱</span>
+          <span class="domain-tag">허용오차 탐지</span>
+          <span class="domain-tag">커미셔닝 보고서</span>
+        </div>
+      </div>
+
+      <!-- Domain 3 -->
+      <div class="domain-card">
+        <div class="domain-icon-wrap"><i class="fa-solid fa-clipboard-check"></i></div>
+        <h3 class="domain-title">기계설비 법정 성능점검</h3>
+        <p class="domain-desc">현장 점검 메모, 사진, 측정값을 표준 점검표로 자동 분류하고, 과거 이력과 비교해 효율(%) 저하 추이 및 최적의 유지보수 시점을 권고합니다.</p>
+        <div class="domain-tags">
+          <span class="domain-tag">법정 성능점검 서식</span>
+          <span class="domain-tag">효율저하 추이 분석</span>
+          <span class="domain-tag">교체 시점 제안</span>
+        </div>
+      </div>
+
+      <!-- Domain 4 -->
+      <div class="domain-card">
+        <div class="domain-icon-wrap"><i class="fa-solid fa-headset"></i></div>
+        <h3 class="domain-title">엔지니어링 영업 & 기술지원</h3>
+        <p class="domain-desc">고객사의 설비 규모와 용도에 따른 법정 점검 대상 여부를 신속 판정하고, 필요 제출 서류 목록 및 1차 표준 견적서를 빠르게 산출합니다.</p>
+        <div class="domain-tags">
+          <span class="domain-tag">법정 대상 판정</span>
+          <span class="domain-tag">1차 자동 견적</span>
+          <span class="domain-tag">기술 서류 안내</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Step Human-in-the-Loop Workflow (Slide 5, 7) -->
+  <section class="section-wrap workflow-section" id="workflow">
+    <div class="section-header">
+      <span class="section-subtitle" style="color: var(--accent-cyan);">Operation Framework</span>
+      <h2 class="section-title">AI 초안 뒤에 3단계 철저한 검증을 둡니다</h2>
+      <p class="section-desc">AI는 데이터를 정제해 초안을 작성하고, 고숙련 기술진이 공학적 타당성을 검토한 후 최종 서명하는 신뢰 프로세스</p>
+    </div>
+
+    <div class="workflow-grid">
+      <div class="workflow-card">
+        <span class="step-badge">01</span>
+        <span class="step-role">데이터 준비 (현장 엔지니어)</span>
+        <h3 class="step-title">현장 자료 표준 양식 업로드</h3>
+        <p class="step-desc">비식별화된 계측값, 현장 사진, 점검 메모를 표준화된 템플릿 양식으로 업로드하여 AI가 즉시 정밀 분석할 수 있는 체계로 정리합니다.</p>
+      </div>
+
+      <div class="workflow-card">
+        <span class="step-badge">02</span>
+        <span class="step-role">AI 분석 & 대조 (AI Engine)</span>
+        <h3 class="step-title">설계 기준 대조 및 보고서 초안 생성</h3>
+        <p class="step-desc">설계 기준치와 실측값을 대조하여 허용 오차 초과 구간을 식별하고, 불균형 원인 및 조치 의견이 포함된 결과 보고서 초안을 자동으로 생성합니다.</p>
+      </div>
+
+      <div class="workflow-card">
+        <span class="step-badge">03</span>
+        <span class="step-role">엔지니어 승인 (책임 기술자)</span>
+        <h3 class="step-title">최종 검토 및 공학적 서명·날인</h3>
+        <p class="step-desc">현장 물리적 수치와 공학적 타당성을 검토한 뒤, 책임 기술자가 최종 승인 및 서명하여 발주처에 제출 가능한 공인 보고서로 완성합니다.</p>
+      </div>
+    </div>
+
+    <!-- Security & Protection (Slide 5) -->
+    <div class="security-bar">
+      <div class="security-item">
+        <i class="fa-solid fa-lock sec-icon"></i>
+        <div class="sec-text">
+          <strong>내부 폐쇄 보안망 처리</strong>
+          <span>외부 데이터 유출 원천 차단</span>
+        </div>
+      </div>
+      <div class="security-item">
+        <i class="fa-solid fa-user-shield sec-icon"></i>
+        <div class="sec-text">
+          <strong>역할 기반 접근 권한 통제</strong>
+          <span>인증된 엔지니어 전용 접근</span>
+        </div>
+      </div>
+      <div class="security-item">
+        <i class="fa-solid fa-key sec-icon"></i>
+        <div class="sec-text">
+          <strong>전송 및 저장 데이터 암호화</strong>
+          <span>발주처 프로젝트 기밀 완벽 보호</span>
+        </div>
+      </div>
+      <div class="security-item">
+        <i class="fa-solid fa-signature sec-icon"></i>
+        <div class="sec-text">
+          <strong>책임 기술자 단독 서명제</strong>
+          <span>AI 단독 판단 및 무검증 제출 금지</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quantitative Stats (Slide 8) -->
+  <section class="stats-section" id="stats">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-subtitle">Proven Results</span>
+        <h2 class="section-title">수치로 증명되는 AI 업무 개선 성과</h2>
+        <p class="section-desc">GIE엔지니어링의 현장 테스트와 파일럿을 통해 검증된 정량적 혁신 지표입니다.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number">16h ➜ <span>6h</span></div>
+          <div class="stat-title">건당 보고서 작성 시간</div>
+          <div class="stat-sub">기존 대비 60% 이상 공수 단축 달성</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number"><span>0%</span>대</div>
+          <div class="stat-title">데이터 입력 오류율</div>
+          <div class="stat-sub">수기 입력 탈피 및 자동 파싱 검증</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number"><span>3배</span> ↑</div>
+          <div class="stat-title">기술 자료 대응 속도</div>
+          <div class="stat-sub">AI 엔지니어링 지식베이스 즉시 질의</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number"><span>6개월</span></div>
+          <div class="stat-title">단계별 안정적 구축</div>
+          <div class="stat-sub">데이터 표준화부터 전사 확산 로드맵</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE SIMULATOR (Live Testing Tool based on Slide 4) -->
+  <section class="simulator-section" id="simulator">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-subtitle">Interactive Demo</span>
+        <h2 class="section-title">TAB 계측 이상감지 및 보고서 초안 생성 시뮬레이터</h2>
+        <p class="section-desc">현장 장비 로그를 입력하여 AI가 허용 오차 초과 구간을 찾고 분석 보고서 초안을 작성하는 과정을 직접 체험해 보세요.</p>
+      </div>
+
+      <div class="sim-container">
+        <div class="sim-header">
+          <div class="sim-header-title">
+            <i class="fa-solid fa-microchip" style="color: var(--accent-cyan);"></i>
+            <span>GIE 설비 이상 진단 & 초안 작성 시뮬레이터</span>
+          </div>
+          <span style="font-size: 0.8rem; background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 4px;">AI Engine v2.6 Ready</span>
+        </div>
+
+        <div class="sim-body">
+          <!-- Form Inputs -->
+          <div class="sim-input-col">
+            <div class="sample-btn-wrap">
+              <button class="btn-sample" onclick="loadSample(1)"><i class="fa-solid fa-flask"></i> 샘플 1 (냉각탑 온도 이상)</button>
+              <button class="btn-sample" onclick="loadSample(2)"><i class="fa-solid fa-flask"></i> 샘플 2 (급기 덕트 풍량 정상)</button>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">점검 대상 장비명</label>
+              <input type="text" id="simEquipName" class="form-input" value="공조기 AHU-02 냉각수 순환 시스템">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group">
+                <label class="form-label">측정 항목</label>
+                <select id="simItemType" class="form-select" onchange="updateUnits()">
+                  <option value="온도">온도 (℃)</option>
+                  <option value="풍량">풍량 (CMH)</option>
+                  <option value="압력">압력 (mmAq / Pa)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">설계 기준값</label>
+                <input type="number" id="simDesignVal" class="form-input" value="70">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-group">
+                <label class="form-label">허용 오차 범위 (±)</label>
+                <input type="number" id="simTolerance" class="form-input" value="10">
+              </div>
+              <div class="form-group">
+                <label class="form-label">현장 실측값</label>
+                <input type="number" id="simActualVal" class="form-input" value="92.3">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">현장 엔지니어 특이사항 메모</label>
+              <textarea id="simEngineerMemo" class="form-input" style="height: 75px; resize: none;">응축기 인근 토출 배관에서 미세 진동 감지 및 표면 발열 지속됨.</textarea>
+            </div>
+
+            <button class="btn-sim-run" onclick="runSimulation()">
+              <i class="fa-solid fa-magnifying-glass-chart"></i> AI 이상 진단 및 대조 실행
+            </button>
+          </div>
+
+          <!-- Dynamic Output Results -->
+          <div class="sim-output-box">
+            <div class="sim-out-header">
+              <span class="sim-out-title"><i class="fa-solid fa-chart-pie"></i> 실시간 분석 및 대조 결과</span>
+              <span id="simStatusBadge" style="font-size: 0.78rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: #FEE2E2; color: #DC2626;">허용 오차 초과 감지</span>
+            </div>
+
+            <div class="sim-chart-wrap">
+              <div class="chart-bar-row">
+                <div class="chart-bar-info">
+                  <span>현장 실측값</span>
+                  <span id="chartActualLabel">92.3 ℃</span>
+                </div>
+                <div class="chart-bar-track">
+                  <div class="chart-bar-fill danger" id="chartActualBar" style="width: 92%;"></div>
+                </div>
+              </div>
+
+              <div class="chart-bar-row" style="margin-bottom: 0;">
+                <div class="chart-bar-info">
+                  <span>설계 기준치 (허용 한계)</span>
+                  <span id="chartDesignLabel">70.0 ℃ (허용 60~80℃)</span>
+                </div>
+                <div class="chart-bar-track">
+                  <div class="chart-bar-fill normal" id="chartDesignBar" style="width: 70%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-opinion-box" id="aiOpinionBox">
+              <strong><i class="fa-solid fa-robot"></i> AI 원인 및 조치 의견 (초안):</strong><br>
+              <span id="aiOpinionText">
+                설계 기준치(70℃) 대비 실측값(92.3℃)이 허용 오차 범위를 12.3℃ 초과하였습니다. 냉각 코일 열교환 효율 저하 및 스트레이너 이물질 퇴적으로 인한 유량 부족이 의심되오니, 필터 세척 및 센서 제로점 보정을 권장합니다.
+              </span>
+            </div>
+
+            <button class="btn-generate-report" onclick="openReportModal()">
+              <i class="fa-solid fa-file-lines"></i> 정식 보고서 초안(PDF 양식) 확인하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap & Pilot Strategy (Slide 9, 10) -->
+  <section class="section-wrap" id="roadmap">
+    <div class="section-header">
+      <span class="section-subtitle">Roadmap & Safety</span>
+      <h2 class="section-title">6개월 단계별 도입 계획 및 파일럿 프로젝트</h2>
+      <p class="section-desc">초기 TAB 보고서 파일럿으로 효과와 안전성을 철저히 검증한 후, 전사 시스템으로 확장하여 리스크를 원천 통제합니다.</p>
+    </div>
+
+    <div class="roadmap-grid">
+      <!-- Stage 1 -->
+      <div class="roadmap-card">
+        <div class="roadmap-phase">Stage 01 (1~4개월)</div>
+        <h3 class="roadmap-title">현장 파일럿 검증</h3>
+        <ul class="roadmap-list">
+          <li><i class="fa-solid fa-check"></i> TAB·Commissioning 측정 데이터 및 표준 보고서 1개 유형 선정</li>
+          <li><i class="fa-solid fa-check"></i> 데이터 표준(항목·단위·네이밍) 수립</li>
+          <li><i class="fa-solid fa-check"></i> 검수 기준 및 허용 오차 규칙 정의</li>
+          <li><i class="fa-solid fa-check"></i> <strong>적용:</strong> 현장 파일럿 적용 후 피드백 반영</li>
+        </ul>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="roadmap-card" style="border-top: 4px solid var(--accent-blue);">
+        <div class="roadmap-phase">Stage 02 (5~6개월)</div>
+        <h3 class="roadmap-title">기능 확산 및 지식베이스 구축</h3>
+        <ul class="roadmap-list">
+          <li><i class="fa-solid fa-check"></i> 파일럿 검증 완료 후 기계설비 성능점검 확대</li>
+          <li><i class="fa-solid fa-check"></i> 설계도서 & 특기시방서 AI 지식베이스 통합</li>
+          <li><i class="fa-solid fa-check"></i> 영업 문의 요약 및 1차 표준 견적 연동</li>
+          <li><i class="fa-solid fa-check"></i> <strong>통제:</strong> 법적 서명·날인 책임자 전담 유지</li>
+        </ul>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="roadmap-card">
+        <div class="roadmap-phase">Stage 03 (6개월 이후)</div>
+        <h3 class="roadmap-title">전사 통합 운영 및 고도화</h3>
+        <ul class="roadmap-list">
+          <li><i class="fa-solid fa-check"></i> 전사 AI 엔지니어링 포털 공식 운영</li>
+          <li><i class="fa-solid fa-check"></i> 사내 보안 폐쇄망 구축 및 접근 제어 고도화</li>
+          <li><i class="fa-solid fa-check"></i> 장비별 과거 이력 기반 수명 예측 알고리즘 적용</li>
+          <li><i class="fa-solid fa-check"></i> <strong>원칙:</strong> AI 단독 판단 및 무검증 제출 금지</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Technical Inquiry (Slide 6 영업·지원) -->
+  <section class="section-wrap contact-section" id="contact">
+    <div class="contact-grid">
+      <div class="contact-info-wrap">
+        <span class="section-subtitle" style="color: var(--accent-cyan);">Contact Us</span>
+        <h2 class="section-title">스마트 엔지니어링의 시작,<br>GIE와 함께하십시오.</h2>
+        <p class="section-desc" style="margin-bottom: 32px;">
+          TAB·커미셔닝 수행 문의, 법정 기계설비 성능점검 대상 진단 및 1차 견적, 기계설비설계 검토 의뢰를 접수해 주시면 전문 책임 엔지니어가 신속하게 회신드립니다.
+        </p>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-solid fa-phone"></i></div>
+          <div class="contact-info-text">
+            <strong>기술 문의 및 대표 전화</strong>
+            <p>02-1588-0000 (평일 09:00 ~ 18:00)</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div class="contact-info-text">
+            <strong>공식 기술지원 이메일</strong>
+            <p>contact@gie-engineering.co.kr</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="contact-info-text">
+            <strong>본사 주소</strong>
+            <p>서울특별시 금천구 가산디지털2로 123 GIE 엔지니어링 타워 8층</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Box -->
+      <div class="contact-form-box">
+        <h3 class="contact-form-title">프로젝트 의뢰 및 견적 신청</h3>
+        <form id="inquiryForm" onsubmit="event.preventDefault(); submitInquiry();">
+          <div class="form-group">
+            <label class="form-label">회사명 / 발주처</label>
+            <input type="text" id="inqCompany" class="form-input" placeholder="(주)한국건설 / 관리사무소" required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">담당자 성함</label>
+              <input type="text" id="inqName" class="form-input" placeholder="홍길동 과장" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">연락처</label>
+              <input type="text" id="inqPhone" class="form-input" placeholder="010-0000-0000" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">문의 분야</label>
+            <select id="inqType" class="form-select">
+              <option value="TAB">TAB · Commissioning 계측 및 보고서</option>
+              <option value="성능점검">건축물 기계설비 법정 성능점검</option>
+              <option value="설계">기계설비설계 및 장비일람표 1차 검수</option>
+              <option value="솔루션도입">GIE AI 솔루션 도입 상담</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">건축물 규모 및 주요 내용</label>
+            <textarea id="inqDetails" class="form-input" style="height: 90px; resize: none;" placeholder="건물 연면적, 위치, 계측 희망 일정 등을 간략히 적어주세요."></textarea>
+          </div>
+          <button type="submit" class="btn-hero-primary" style="width: 100%; justify-content: center;">
+            <i class="fa-solid fa-paper-plane"></i> 문의 내용 접수 및 1차 안내 요청
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h2>GIE ENGINEERING</h2>
+        <p>인공지능 기반 측정 데이터 파싱과 엔지니어링 책임 검증 시스템을 결합하여 건설 및 건축 기계설비의 신뢰성을 선도합니다.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>사업 분야</h4>
+        <ul class="footer-links">
+          <li><a href="#domains">기계설비설계 검수</a></li>
+          <li><a href="#domains">TAB · 커미셔닝</a></li>
+          <li><a href="#domains">기계설비 법정 성능점검</a></li>
+          <li><a href="#domains">AI 엔지니어링 솔루션</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>솔루션 & 프로세스</h4>
+        <ul class="footer-links">
+          <li><a href="#workflow">Human-in-the-Loop 원칙</a></li>
+          <li><a href="#stats">정량적 도입 성과</a></li>
+          <li><a href="#roadmap">추진 로드맵</a></li>
+          <li><a href="#simulator">온라인 진단기</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>고객센터 & 인증</h4>
+        <p style="color: #CBD5E1; margin-bottom: 8px;"><strong>Tel:</strong> 042-537-3663</p>
+        <p style="color: #CBD5E1; margin-bottom: 8px;"><strong>Fax:</strong> 042-537-3668</p>
+        <p style="color: #CBD5E1; margin-bottom: 8px;"><strong>E-mail:</strong> hkp3661@naver.com</p>
+        <p style="color: #94A3B8;">기계설비 성능점검업 공인 등록 | 엔지니어링사업자 면허 보유</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        (주)GIE엔지니어링 | 대표이사 홍경표 | 사업자등록번호 314-86-28629<br>
+        본사: 대전광역시 유성구 지족북로 76 지아빌딩 2층 (지족동) | TEL: 042-537-3663 | FAX: 042-537-3668
+      </div>
+      <div>&copy; 2026 (주)GIE엔지니어링. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- MODAL: Company Introduction (Pop-up Menu Modal: 인사말, 회사개요, 면허및자격) -->
+  <div class="company-modal-overlay" id="companyModal">
+    <div class="company-modal-box">
+      <div class="company-modal-header">
+        <div class="company-modal-title">
+          <div class="logo-badge" style="width: 32px; height: 32px; font-size: 0.95rem;">GIE</div>
+          <span>(주)GIE엔지니어링 회사소개</span>
+        </div>
+        <div class="company-modal-close" onclick="closeCompanyModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+
+      <div class="company-tabs-nav">
+        <button class="company-tab-btn active" id="btnTabGreeting" onclick="switchCompanyTab('greeting')">
+          <i class="fa-solid fa-user-tie"></i> 대표이사 인사말
+        </button>
+        <button class="company-tab-btn" id="btnTabOverview" onclick="switchCompanyTab('overview')">
+          <i class="fa-solid fa-building"></i> 회사개요
+        </button>
+        <button class="company-tab-btn" id="btnTabLicense" onclick="switchCompanyTab('license')">
+          <i class="fa-solid fa-certificate"></i> 면허 및 자격
+        </button>
+      </div>
+
+      <div class="company-modal-body">
+        <!-- TAB 1: Greeting -->
+        <div class="company-tab-panel active" id="panelGreeting">
+          <div class="greeting-layout">
+            <div class="greeting-photo-card">
+              <img src="images/greeting.jpg" alt="대표이사 홍경표" style="object-position: 25% 40%;">
+              <div class="greeting-photo-caption">
+                <strong>홍 경 표 기술사</strong>
+                <span>(주)GIE엔지니어링 대표이사</span>
+              </div>
+            </div>
+            <div class="greeting-content">
+              <h3>안녕하세요.</h3>
+              <span class="greeting-sub">당사를 방문하여 주셔서 진심으로 감사합니다.</span>
+              <p class="greeting-text-p">
+                당사는 <strong>2001년 5월 10일 창립</strong>하여 기계설비 설계, TAB, Commissioning, 기계설비 성능점검 전문업체로 고객 만족을 위한 최상의 노력과 성실함을 바탕으로 지속적인 성장을 하고 있습니다.
+              </p>
+              <p class="greeting-text-p">
+                창립 이래 냉난방, 공기조화, 위생설비 등 기계설비와 클린룸, 항온항습실, 환경시험실 등의 산업환경설비, 프로세스에서 필요로 하는 공기조화, 냉동, 열유체 응용기술 및 에너지 이용 관련 시설 등에 관한 기계설비 기술을 서비스하고 있습니다.
+              </p>
+              <p class="greeting-text-p">
+                또한 건축물 시설물의 설계목적에 부합되도록 하는 <strong>TAB & Commissioning</strong>, 건축물 시설물 등에 설치되는 기계설비의 안전 및 성능 확보, 시스템의 최적운전을 통한 에너지저감 및 에너지비용 절감 도모, 사용연한에 따른 기계설비 장비의 노후화 및 효율저하 개선을 위한 <strong>기계설비 성능점검</strong>, 연구시설, 업무시설, 병원, 공동주택, 공장 등의 성능개선 사업과 관련한 진단, 설계, 감리, 컨설팅업무 등을 수행하고 있습니다.
+              </p>
+              <p class="greeting-text-p">
+                현장의 실제 운전사례와 설계를 상호 유기적으로 결합하여 현장감 있는 설계, 이론이 뒷받침되는 기계설비기술이 응용될 수 있도록 엔지니어링에 최선의 노력을 다하겠습니다.<br>
+                (주)GIE엔지니어링을 격려해 주심에 감사드리며 앞으로도 많은 지도편달을 부탁드립니다.
+              </p>
+              <div class="greeting-sign-block">
+                <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 4px;">(주)GIE엔지니어링</p>
+                <span>대표이사 홍 경 표</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Overview -->
+        <div class="company-tab-panel" id="panelOverview">
+          <div class="overview-layout">
+            <div>
+              <img src="images/overview.jpg" alt="GIE 사옥 전경" class="overview-building-img" style="object-position: center;">
+              <p style="text-align: center; font-size: 0.82rem; color: #64748B; margin-top: 10px;">
+                <i class="fa-solid fa-location-dot" style="color: var(--accent-blue);"></i> 대전시 유성구 지족북로 76 지아빌딩 (GIE 본사 사옥)
+              </p>
+            </div>
+            <div>
+              <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 18px; border-bottom: 2px solid var(--primary-dark); padding-bottom: 10px;">
+                (주)GIE 엔지니어링 기업 개요
+              </h3>
+              <table class="overview-table">
+                <tr>
+                  <th>회사명</th>
+                  <td><strong>(주)GIE엔지니어링</strong></td>
+                </tr>
+                <tr>
+                  <th>대표이사</th>
+                  <td><strong>홍 경 표</strong></td>
+                </tr>
+                <tr>
+                  <th>설립일자</th>
+                  <td><strong>2001년 05월 10일</strong> (25년 업력)</td>
+                </tr>
+                <tr>
+                  <th>사업자등록번호</th>
+                  <td><strong>314-86-28629</strong></td>
+                </tr>
+                <tr>
+                  <th>소재지(주소)</th>
+                  <td>대전시 유성구 지족북로 76 지아빌딩 2층 (지족동)</td>
+                </tr>
+                <tr>
+                  <th>대표전화</th>
+                  <td><a href="tel:042-537-3663" style="color: var(--accent-blue); font-weight: 700;">042-537-3663</a></td>
+                </tr>
+                <tr>
+                  <th>팩스번호</th>
+                  <td>042-537-3668</td>
+                </tr>
+                <tr>
+                  <th>대표 이메일</th>
+                  <td>hkp3661@naver.com</td>
+                </tr>
+                <tr>
+                  <th>핵심 사업영역</th>
+                  <td>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                      <span class="domain-tag" style="background: #EFF6FF; color: var(--accent-blue);">기계설비설계</span>
+                      <span class="domain-tag" style="background: #EFF6FF; color: var(--accent-blue);">TAB (시험·조정·평가)</span>
+                      <span class="domain-tag" style="background: #EFF6FF; color: var(--accent-blue);">Commissioning</span>
+                      <span class="domain-tag" style="background: #EFF6FF; color: var(--accent-blue);">기계설비 법정 성능점검</span>
+                      <span class="domain-tag" style="background: #DCFCE7; color: #15803D;">AI 엔지니어링 업무개선</span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Licenses & Certifications -->
+        <div class="company-tab-panel" id="panelLicense">
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px;">
+              면허 및 공인 자격 현황
+            </h3>
+            <p style="font-size: 0.88rem; color: #64748B;">
+              국가공인 기술사회, 국토교통부, 지자체 및 유관 학회로부터 정식 인가받은 신뢰성 높은 엔지니어링 전문 라이선스를 보유하고 있습니다.
+            </p>
+          </div>
+
+          <!-- License Image Showcase -->
+          <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 24px; text-align: center;">
+            <img src="images/license.jpg" alt="GIE 보유 면허 및 등록증" class="licenses-banner">
+            <span style="font-size: 0.8rem; color: #64748B;">▲ (주)GIE엔지니어링 공인 면허 및 자격증 원본 현황</span>
+          </div>
+
+          <div class="licenses-grid">
+            <div class="license-card">
+              <div class="license-icon-wrap"><i class="fa-solid fa-id-card"></i></div>
+              <div class="license-card-text">
+                <strong>사업자등록증</strong>
+                <span>등록번호: 314-86-28629 (북대전세무서장)</span>
+              </div>
+            </div>
+            <div class="license-card">
+              <div class="license-icon-wrap"><i class="fa-solid fa-stamp"></i></div>
+              <div class="license-card-text">
+                <strong>기술사사무소 개설등록증</strong>
+                <span>과학기술정보통신부 · 한국기술사회</span>
+              </div>
+            </div>
+            <div class="license-card">
+              <div class="license-icon-wrap"><i class="fa-solid fa-building-circle-check"></i></div>
+              <div class="license-card-text">
+                <strong>엔지니어링사업자 신고증</strong>
+                <span>기계부문 전문기술인력 (한국엔지니어링협회장)</span>
+              </div>
+            </div>
+            <div class="license-card">
+              <div class="license-icon-wrap"><i class="fa-solid fa-clipboard-check"></i></div>
+              <div class="license-card-text">
+                <strong>기계설비성능점검업 등록증</strong>
+                <span>기계설비법 제21조 공인 등록 (대전광역시장)</span>
+              </div>
+            </div>
+            <div class="license-card">
+              <div class="license-icon-wrap"><i class="fa-solid fa-award"></i></div>
+              <div class="license-card-text">
+                <strong>TAB 수행자격 확인증</strong>
+                <span>TAB 전문 수행기관 공인 확인 ((사)대한설비공학회)</span>
+              </div>
+            </div>
+            <div class="license-card">
+              <div class="license-icon-wrap"><i class="fa-solid fa-fire-extinguisher"></i></div>
+              <div class="license-card-text">
+                <strong>소방시설업 등록증</strong>
+                <span>전문 소방시설설계업 등록 (대전광역시장)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Generated Report Preview (Slide 4, 5 Output) -->
+  <div class="report-modal" id="reportModal">
+    <div class="report-paper">
+      <i class="fa-solid fa-xmark report-close" onclick="closeReportModal()"></i>
+      <div class="report-header-ui">
+        <div>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-blue);">GIE AI REPORT SYSTEM</span>
+          <h2 style="font-size: 1.5rem; color: var(--primary-dark); margin-top: 4px;">이상 발생 분석 보고서 (초안)</h2>
+        </div>
+        <div style="font-size: 0.8rem; color: #64748B; text-align: right;">
+          문서번호: GIE-AI-20261125-01<br>
+          생성일시: <span id="reportGenDate">2026-11-25 11:30</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #1E293B; margin-bottom: 8px;">1. 점검 개요</h4>
+        <table class="report-table">
+          <tr>
+            <th style="width: 25%;">대상 장비명</th>
+            <td id="repEquipName">공조기 AHU-02 냉각수 순환 시스템</td>
+            <th style="width: 25%;">측정 항목</th>
+            <td id="repItemType">온도 (℃)</td>
+          </tr>
+          <tr>
+            <th>설계 기준값</th>
+            <td id="repDesignVal">70.0 ℃ (허용 60.0 ~ 80.0 ℃)</td>
+            <th>현장 실측값</th>
+            <td id="repActualVal" style="color: #DC2626; font-weight: 700;">92.3 ℃ (오차 +12.3 ℃)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #1E293B; margin-bottom: 8px;">2. AI 이상 분석 및 원인 (의견)</h4>
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 14px; border-radius: 6px; font-size: 0.88rem; line-height: 1.6;" id="repAiText">
+          • 설계 기준선 대비 허용 오차 한계를 초과한 고온 구간 발생.<br>
+          • 냉각 펌프 양정 저하 또는 스트레이너 오염으로 인한 순환 유량 부족 가능성 높음.<br>
+          • 센서 영점 편차 확인 및 배관 밸브 개폐도 점검 필요.
+        </div>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: #1E293B; margin-bottom: 8px;">3. 권고 조치 사항 (Action Items)</h4>
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 14px; border-radius: 6px; font-size: 0.88rem; line-height: 1.6;">
+          1) 냉각수 스트레이너 분해 소제 및 코일 플러싱 작업 권장<br>
+          2) 현장 차압계 및 온도 센서 보정(Calibration) 실시<br>
+          3) 조치 후 재측정을 통한 풍량/유량 밸런싱(TAB) 재확인
+        </div>
+      </div>
+
+      <!-- Signature Approval Box (Human-in-the-Loop) -->
+      <div class="report-sign-box">
+        <p style="margin-bottom: 8px; font-size: 0.85rem; color: #475569;">
+          * 본 문서는 AI 보조 엔진에 의해 작성된 초안이며, 공학적 검토 및 최종 효력은 책임 엔지니어의 서명 날인에 의해 확정됩니다.
+        </p>
+        <div style="display: inline-flex; align-items: center; gap: 14px; font-weight: 700; color: #0F172A;">
+          <span>GIE엔지니어링 공조설비 책임기술사:</span>
+          <span style="border-bottom: 2px solid #0F172A; padding: 2px 16px;">김 기 술 (인)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastBox">
+    <i class="fa-solid fa-circle-check" style="color: var(--accent-cyan); font-size: 1.1rem;"></i>
+    <span id="toastMsg">성공적으로 처리되었습니다.</span>
+  </div>
+
+  <script>
+    // Samples
+    function loadSample(num) {
+      if (num === 1) {
+        document.getElementById('simEquipName').value = "공조기 AHU-02 냉각수 순환 시스템";
+        document.getElementById('simItemType').value = "온도";
+        document.getElementById('simDesignVal').value = 70;
+        document.getElementById('simTolerance').value = 10;
+        document.getElementById('simActualVal').value = 92.3;
+        document.getElementById('simEngineerMemo').value = "응축기 인근 토출 배관에서 미세 진동 감지 및 표면 발열 지속됨.";
+      } else {
+        document.getElementById('simEquipName').value = "5층 주실 급기 메인 덕트(SF-05)";
+        document.getElementById('simItemType').value = "풍량";
+        document.getElementById('simDesignVal').value = 1200;
+        document.getElementById('simTolerance').value = 100;
+        document.getElementById('simActualVal').value = 1180;
+        document.getElementById('simEngineerMemo').value = "풍속 측정기(열선) 측정 결과 고른 분포를 보이며 정상 가동 중.";
+      }
+      updateUnits();
+      runSimulation();
+      showToast("샘플 " + num + " 데이터가 로드되었습니다.");
+    }
+
+    function updateUnits() {
+      const type = document.getElementById('simItemType').value;
+      const dVal = parseFloat(document.getElementById('simDesignVal').value);
+      const aVal = parseFloat(document.getElementById('simActualVal').value);
+      let unit = "℃";
+      if (type === "풍량") unit = "CMH";
+      if (type === "압력") unit = "Pa";
+      document.getElementById('chartActualLabel').innerText = `${aVal} ${unit}`;
+      document.getElementById('chartDesignLabel').innerText = `${dVal} ${unit}`;
+    }
+
+    function runSimulation() {
+      const equip = document.getElementById('simEquipName').value;
+      const type = document.getElementById('simItemType').value;
+      const design = parseFloat(document.getElementById('simDesignVal').value) || 0;
+      const tol = parseFloat(document.getElementById('simTolerance').value) || 0;
+      const actual = parseFloat(document.getElementById('simActualVal').value) || 0;
+      const memo = document.getElementById('simEngineerMemo').value;
+
+      let unit = "℃";
+      if (type === "풍량") unit = "CMH";
+      if (type === "압력") unit = "Pa";
+
+      const minAllowed = design - tol;
+      const maxAllowed = design + tol;
+      const isAnomaly = (actual < minAllowed) || (actual > maxAllowed);
+
+      // UI Updates
+      const badge = document.getElementById('simStatusBadge');
+      const actBar = document.getElementById('chartActualBar');
+      const actLabel = document.getElementById('chartActualLabel');
+      const desLabel = document.getElementById('chartDesignLabel');
+      const opinionText = document.getElementById('aiOpinionText');
+
+      actLabel.innerText = `${actual} ${unit}`;
+      desLabel.innerText = `${design} ${unit} (허용 ${minAllowed}~${maxAllowed} ${unit})`;
+
+      // Width calculation relative to max
+      const maxRange = Math.max(actual, maxAllowed) * 1.15;
+      const actPercent = Math.min(100, Math.round((actual / maxRange) * 100));
+      const desPercent = Math.min(100, Math.round((design / maxRange) * 100));
+
+      actBar.style.width = actPercent + '%';
+      document.getElementById('chartDesignBar').style.width = desPercent + '%';
+
+      if (isAnomaly) {
+        badge.innerText = "허용 오차 초과 감지";
+        badge.style.background = "#FEE2E2";
+        badge.style.color = "#DC2626";
+        actBar.className = "chart-bar-fill danger";
+
+        const diff = Math.abs(actual - design).toFixed(1);
+        opinionText.innerHTML = `
+          설계 기준치(${design} ${unit}) 대비 실측값(${actual} ${unit})이 허용 범위를 <strong>${diff} ${unit}</strong> 벗어났습니다. 
+          현장 메모("${memo}") 분석 결과, 계통 불균형 및 열교환 저하 가능성이 높습니다. 
+          센서 보정 및 필터/배관 청소 후 TAB 재조정을 권고합니다.
+        `;
+      } else {
+        badge.innerText = "정상 범위 (오차 허용 이내)";
+        badge.style.background = "#DCFCE7";
+        badge.style.color = "#16A34A";
+        actBar.className = "chart-bar-fill normal";
+
+        opinionText.innerHTML = `
+          설계 기준치(${design} ${unit}) 대비 실측값(${actual} ${unit})이 정상 허용 범위(${minAllowed}~${maxAllowed} ${unit}) 내에서 안정적으로 측정되었습니다. 
+          특이사항 없이 현재 설비 성능이 원활하게 유지되고 있습니다.
+        `;
+      }
+
+      showToast("AI 이상 탐지 및 대조 완료!");
+    }
+
+    // Report Modal
+    function openReportModal() {
+      const equip = document.getElementById('simEquipName').value;
+      const type = document.getElementById('simItemType').value;
+      const design = parseFloat(document.getElementById('simDesignVal').value) || 0;
+      const tol = parseFloat(document.getElementById('simTolerance').value) || 0;
+      const actual = parseFloat(document.getElementById('simActualVal').value) || 0;
+      const memo = document.getElementById('simEngineerMemo').value;
+
+      let unit = "℃";
+      if (type === "풍량") unit = "CMH";
+      if (type === "압력") unit = "Pa";
+
+      document.getElementById('repEquipName').innerText = equip;
+      document.getElementById('repItemType').innerText = `${type} (${unit})`;
+      document.getElementById('repDesignVal').innerText = `${design} ${unit} (허용 ${design-tol} ~ ${design+tol} ${unit})`;
+      document.getElementById('repActualVal').innerText = `${actual} ${unit} (오차 ${(actual-design).toFixed(1)} ${unit})`;
+
+      const diff = (actual - design).toFixed(1);
+      const isAnomaly = (actual < (design-tol)) || (actual > (design+tol));
+
+      if (isAnomaly) {
+        document.getElementById('repAiText').innerHTML = `
+          • 설계 기준선 대비 허용 오차 한계를 초과한 이상 측정값 식별 (편차: ${diff} ${unit}).<br>
+          • 현장 메모("${memo}")와 과거 트러블슈팅 사례 데이터베이스 대조 완료.<br>
+          • 설비 부하 증가 및 밸런싱 불균형에 따른 정밀 점검 요망.
+        `;
+      } else {
+        document.getElementById('repAiText').innerHTML = `
+          • 설계 기준치 대비 실측값 일치율 98% 이상 양호 판정.<br>
+          • 특이 진동 및 이상 징후 없음. 정상 운전 승인.
+        `;
+      }
+
+      const now = new Date();
+      document.getElementById('reportGenDate').innerText = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      
+      document.getElementById('reportModal').classList.add('active');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.remove('active');
+    }
+
+    // Submit Contact Form
+    function submitInquiry() {
+      const comp = document.getElementById('inqCompany').value;
+      const name = document.getElementById('inqName').value;
+      const type = document.getElementById('inqType').value;
+      
+      alert(`[접수 완료 안내]\n\n고객사: ${comp}\n담당자: ${name} 님\n문의분야: ${type}\n\n문의 내용이 GIE엔지니어링 기술지원팀에 정상 접수되었습니다. 24시간 이내에 1차 안내 및 견적 검토 결과를 연락드리겠습니다.`);
+      showToast("기술 상담 문의가 접수되었습니다.");
+      document.getElementById('inquiryForm').reset();
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      document.getElementById('toastMsg').innerText = msg;
+      box.classList.add('show');
+      setTimeout(() => {
+        box.classList.remove('show');
+      }, 3000);
+    }
+
+    // Company Pop-up Modal Controls
+    function openCompanyModal(tabName) {
+      document.getElementById('companyModal').classList.add('active');
+      if (tabName) {
+        switchCompanyTab(tabName);
+      }
+    }
+
+    function closeCompanyModal() {
+      document.getElementById('companyModal').classList.remove('active');
+    }
+
+    function switchCompanyTab(tabName) {
+      // Tab Buttons
+      document.getElementById('btnTabGreeting').classList.remove('active');
+      document.getElementById('btnTabOverview').classList.remove('active');
+      document.getElementById('btnTabLicense').classList.remove('active');
+
+      // Panels
+      document.getElementById('panelGreeting').classList.remove('active');
+      document.getElementById('panelOverview').classList.remove('active');
+      document.getElementById('panelLicense').classList.remove('active');
+
+      if (tabName === 'greeting') {
+        document.getElementById('btnTabGreeting').classList.add('active');
+        document.getElementById('panelGreeting').classList.add('active');
+      } else if (tabName === 'overview') {
+        document.getElementById('btnTabOverview').classList.add('active');
+        document.getElementById('panelOverview').classList.add('active');
+      } else if (tabName === 'license') {
+        document.getElementById('btnTabLicense').classList.add('active');
+        document.getElementById('panelLicense').classList.add('active');
+      }
+    }
+
+    // Close Modals on Outside Click & ESC Key
+    window.addEventListener('click', function(e) {
+      const compModal = document.getElementById('companyModal');
+      if (e.target === compModal) {
+        closeCompanyModal();
+      }
+      const repModal = document.getElementById('reportModal');
+      if (e.target === repModal) {
+        closeReportModal();
+      }
+    });
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeCompanyModal();
+        closeReportModal();
+      }
+    });
+  </script>
+</body>
+</html>
